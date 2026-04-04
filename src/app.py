@@ -172,7 +172,11 @@ def render_beta_distributions(
         y = stats.beta.pdf(x, state.alpha, state.beta_param)
         ax.plot(x, y, color=color, linewidth=2, label=f"Bandit {i + 1}")
         ax.axvline(
-            true_p, color=color, linestyle="--", alpha=0.5, linewidth=1,
+            true_p,
+            color=color,
+            linestyle="--",
+            alpha=0.5,
+            linewidth=1,
         )
 
     ax.set_xlabel("Probability of Success")
@@ -294,8 +298,7 @@ def run_simulator_page() -> None:
     """Main simulator page logic."""
     st.title("Bandit Explorer")
     st.markdown(
-        "*Set the hidden probabilities. "
-        "Watch Thompson Sampling discover the best arm.*"
+        "*Set the hidden probabilities. Watch Thompson Sampling discover the best arm.*"
     )
 
     # --- Sidebar controls ---
@@ -303,9 +306,7 @@ def run_simulator_page() -> None:
 
     if st.sidebar.button("Randomize"):
         for i in range(4):
-            st.session_state[f"prob_{i}"] = round(
-                float(np.random.uniform(0.1, 0.9)), 2
-            )
+            st.session_state[f"prob_{i}"] = round(float(np.random.uniform(0.1, 0.9)), 2)
         st.rerun()
 
     probs: list[float] = []
@@ -350,7 +351,9 @@ def run_simulator_page() -> None:
 
     with col1:
         start = st.button(
-            "Start", type="primary", use_container_width=True,
+            "Start",
+            type="primary",
+            use_container_width=True,
         )
     with col2:
         is_paused = (
@@ -393,9 +396,13 @@ def run_simulator_page() -> None:
     # Static display when paused
     if sampler and not st.session_state.running:
         render_current_state(
-            sampler, probs, st.session_state.history,
-            beta_placeholder, scoreboard_placeholder,
-            regret_placeholder, pulls_placeholder,
+            sampler,
+            probs,
+            st.session_state.history,
+            beta_placeholder,
+            scoreboard_placeholder,
+            regret_placeholder,
+            pulls_placeholder,
         )
         if st.session_state.completed:
             st.success(
@@ -405,9 +412,7 @@ def run_simulator_page() -> None:
         return
 
     if not sampler or not st.session_state.running:
-        st.info(
-            "Set the probabilities in the sidebar and click **Start** to begin."
-        )
+        st.info("Set the probabilities in the sidebar and click **Start** to begin.")
         return
 
     # --- Animation loop ---
@@ -426,9 +431,13 @@ def run_simulator_page() -> None:
             )
 
         render_current_state(
-            sampler, probs, st.session_state.history,
-            beta_placeholder, scoreboard_placeholder,
-            regret_placeholder, pulls_placeholder,
+            sampler,
+            probs,
+            st.session_state.history,
+            beta_placeholder,
+            scoreboard_placeholder,
+            regret_placeholder,
+            pulls_placeholder,
         )
 
         trials_remaining = total_trials - sampler.total_pulls
