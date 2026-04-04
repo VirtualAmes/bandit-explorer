@@ -1,0 +1,65 @@
+name: Code Quality
+
+on:
+  push:
+    branches: ["*"]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: RUFF Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: uv sync --extra dev
+
+      - name: RUFF check
+        run: uv run ruff check src/ tests/ --output-format=github
+
+      - name: RUFF format check
+        run: uv run ruff format src/ tests/ --check
+
+  security:
+    name: Bandit Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: uv sync --extra dev
+
+      - name: Bandit scan
+        run: |
+          echo "## Bandit Security Scan Results" >> $GITHUB_STEP_SUMMARY
+          uv run bandit -r src/ -f txt >> $GITHUB_STEP_SUMMARY 2>&1 || true
+          uv run bandit -r src/ -f txt || true
+
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: uv sync --extra dev
+
+      - name: Run tests
+        run: uv run pytest tests/ -v --tb=short
