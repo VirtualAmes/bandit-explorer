@@ -76,7 +76,7 @@ Every push triggers three parallel CI checks:
 ## Built With
 
 This entire application — algorithm, UI, tests, CI pipeline — was described
-in English and built by [Claude Code](https://claude.ai/code) (Opus 4.6)
+in English and built by [Claude Code](https://claude.ai/download) (Opus 4.6)
 in a single session.
 
 The `CLAUDE.md` file defined the rules: Python only, Streamlit for UI,

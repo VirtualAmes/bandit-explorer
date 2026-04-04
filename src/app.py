@@ -130,7 +130,7 @@ built the code, caught and fixed its own lint/security findings,
 pushed to GitHub, and passed CI — all from a natural language
 description.
 
-**[View the source on GitHub](https://github.com/brianames/bandit-explorer)**
+**[View the source on GitHub](https://github.com/VirtualAmes/bandit-explorer)**
 """
     )
 
