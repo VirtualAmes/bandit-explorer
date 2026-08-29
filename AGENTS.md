@@ -45,3 +45,20 @@ seed random generators where needed.
 
 - Commit working code. Don't commit code that fails lint or tests.
 - Write clear commit messages: imperative mood, under 72 characters.
+
+## Operations (ops kit, adopted 2026-08-29)
+
+This repo runs the standard operating procedure from `agent-repo-template`
+(portable core of Strato-Xen's). Read before any git operation:
+
+- `docs/BRANCHING-AND-RELEASES.md` — GitFlow: `main` = production (tagged),
+  `develop` = default PR base, `feature/*` squash-merged, `release/*` /
+  `hotfix/*` merge-committed then back-merged via `backmerge/<ver>`.
+- `docs/OPERATIONS-HYGIENE.md` — every branch/worktree/file has an owner, a
+  purpose, a lifecycle state, and a planned death. Agents work in
+  `.claude/worktrees/<topic>`, never in the primary checkout.
+- `docs/COMMAND-STYLE.md` — one analyzable command per call; `git -C`, no
+  `cd`, no heredoc programs, no compound chains.
+- `python3 scripts/repo_census.py` — read-only branch/worktree census and
+  GitFlow drift report. Run it before cleanup and at session end.
+- Test command: `uv run pytest` — green before every PR; CI runs it on PRs.
